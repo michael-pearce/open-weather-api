@@ -1,0 +1,116 @@
+{% extends 'main.html' %}
+
+{% block main %}
+
+<header class="p-3 bg-dark text-white sticky-top">
+    <ul class="nav">
+
+        <li class="nav-item">
+            <a href=" {{ url_for('homepage') }}" class="nav-link text-white" aria-current="page">Home</a>
+        </li>
+    </ul>
+
+</header>
+
+<div class="row align-items-stretch mt-3 mx-3">
+
+    <div class="col d-flex" style="max-width: fit-content;">
+
+        <div class="card text-bg-light mb-1">
+            <div class="card-header">User Selection</div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 110px;">City</th>
+                            <th style="width: 100px;">Latitude</th>
+                            <th style="width: 100px;">Longitude</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td> {{ rawResponse["name"] }}</td>
+                        <td> {{ rawResponse["coord"]["lat"] }} </td>
+                        <td> {{ rawResponse["coord"]["lon"] }} </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col d-flex">
+
+        <div class="card text-bg-light mb-1">
+            <div class="card-header">Raw JSON Response</div>
+            <div class="card-body">
+                <code>
+                {{ rawResponse }}
+            </code>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row align-items-stretch mt-3 mx-3 mb-3">
+
+    <div class="col d-flex" style="max-width: fit-content;">
+
+        <div class="card text-bg-light mb-1">
+            <div class="card-header">Weather Table
+                <a href="{{ url_for('download') }}" style="font-style:italic; font-size: small;"> (Download Here)</a>
+            </div>
+            <div class="card-body">
+                <table class="table text-center table table-borderless mb-0" style="table-layout:fixed">
+     
+                    <thead class="table-light">
+                        <tr>
+                        <tr>
+                            {% for i in range(weatherDf.shape[0]) %}
+                            <th class="fw-bold w-auto border-bottom" scope="col"
+                                style="border-width: 0.15em !important; font-size: large;"> {{ weatherDf.iloc[i]['date']
+                                }} </th>
+                            {% endfor %}
+                        </tr>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            {% for i in range(weatherDf.shape[0]) %}
+                            <td class="w-auto"> {{ weatherDf.iloc[i]['weather'] }}</td>
+                            {% endfor %}
+                        </tr>
+
+                        <tr>
+                            {% for i in range(weatherDf.shape[0]) %}
+                            <td class="w-auto py-1" style="font-size:medium"> <img
+                                    src="{{ url_for('static', filename=weatherDf.iloc[i]['iconName']) }}"> </td>
+                            {% endfor %}
+                        </tr>
+
+                        <tr>
+                            {% for i in range(weatherDf.shape[0]) %}
+                            <th class="w-auto"> {{ weatherDf.iloc[i]['temp'] }} </th>
+                            {% endfor %}
+                        </tr>
+
+                        <tr>
+                            {% for i in range(weatherDf.shape[0]) %}
+                            <td class="small w-auto"> {{ weatherDf.iloc[i]['description'] }} </td>
+                            {% endfor %}
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

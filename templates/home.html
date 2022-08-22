@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+
+{% block main %}
+<style>
+    body {
+        background-image: url('../static/mountainBackground.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="bg-light p-5 border rounded-100" style="border-radius:2em">
+        <h1> OpenWeather API Explorer </h1>
+        <br />
+        <form method="POST">
+            {{form.csrf_token()}}
+            {{form.city(class="form-control", placeholder="Enter a city name")}}
+            <small class="form-text text-muted" style="font-style:italic">
+                <a href="http://bulk.openweathermap.org/sample/"> List of valid city names</a>
+            </small>
+            {% for field, errors in form.errors.items() %}
+            <small class="form-text text-muted" style="color:darkred !important">
+                {{ ', '.join(errors) }}
+            </small>
+            {% endfor %}
+            <br />
+            {{form.submit(class= "btn btn-primary")}}
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

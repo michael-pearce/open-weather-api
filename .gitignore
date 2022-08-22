@@ -1,0 +1,7 @@
+venv/
+.vscode/
+.cache/
+__pycache__/
+*test*
+*.png
+*.xlsx
