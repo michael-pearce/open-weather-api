@@ -1,5 +1,4 @@
 # Import statements
-from distutils.log import error
 import pandas as pd
 import json, requests, os
 from flask_wtf import FlaskForm
@@ -78,6 +77,8 @@ def callAPI(urlRoot: str, params: dict, iconRoot: str, histFlag: bool = False) -
     else:
         response = responseRaw
 
+    print(response)
+
     iconName = "".join([response["weather"][0]["icon"], "@2x.png"])
 
     if not os.path.isfile(f"./static/{iconName}"):
@@ -117,7 +118,7 @@ def cleanAndStore(apiResponse: dict, weatherDict: dict) -> dict:
     )
 
     weatherDict["weather"].append(str.title(apiResponse["weather"][0]["main"]))
-
+    
     weatherDict["iconName"].append(
         "".join([apiResponse["weather"][0]["icon"], "@2x.png"])
     )
@@ -192,3 +193,6 @@ def results():
 @app.route("/download", methods=["GET"])
 def download():
     return send_file("./static/sessionData.xlsx")
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', 5000, debug=True)
