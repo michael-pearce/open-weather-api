@@ -5,3 +5,4 @@ __pycache__/
 *test*
 *.png
 *.xlsx
+*Docker*
